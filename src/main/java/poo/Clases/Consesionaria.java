@@ -19,7 +19,12 @@ public class Consesionaria {
     //Constructores
     public Consesionaria() {
     } 
-
+    /**
+     * Constructor con parametros de la clase Consesionaria.
+     * @param clientes
+     * @param vendedores
+     * @param vehiculos 
+     */
     public Consesionaria(ArrayList<Cliente> clientes, ArrayList<Vendedor> vendedores, ArrayList<Vehiculo> vehiculos ){
         this.clientes = clientes;
         this.vendedores = vendedores;
