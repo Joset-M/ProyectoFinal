@@ -10,4 +10,6 @@ package poo.Clases;
  */
 public interface Alquiler {
     double calcularCosto(int dias);
+    double kilometrajeMaximo(double kmMax);
+    double kilometrajeMinimo(double kmMin);
 }

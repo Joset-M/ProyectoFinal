@@ -26,5 +26,38 @@ public class Consesionaria {
         this.vevhiculos = vehiculos;
     }
     
+    //Getters
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public ArrayList<Vendedor> getVendedores() {
+        return vendedores;
+    }
+
+    public ArrayList<Vehiculo> getVevhiculos() {
+        return vevhiculos;
+    }
+    
+    //Setters
+
+    public void setClientes(ArrayList<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public void setVendedores(ArrayList<Vendedor> vendedores) {
+        this.vendedores = vendedores;
+    }
+
+    public void setVevhiculos(ArrayList<Vehiculo> vevhiculos) {
+        this.vevhiculos = vevhiculos;
+    }
+    
+    //Metodo
+
+    @Override
+    public String toString() {
+        return "Consesionaria{" + "clientes=" + clientes + ", vendedores=" + vendedores + ", vevhiculos=" + vevhiculos + '}';
+    }
     
 }
