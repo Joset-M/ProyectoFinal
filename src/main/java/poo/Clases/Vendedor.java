@@ -25,13 +25,15 @@ public class Vendedor extends Persona{
     }
     
     //Getters
-
     public static int getId() {
         return id;
     }
     
     //Metodo
-
+    /**
+     * Metodo que nos permite mostrar la informacion del vendedor
+     * @return 
+     */
     @Override
     public String toString() {
         return "Vendedor{" + '}';
