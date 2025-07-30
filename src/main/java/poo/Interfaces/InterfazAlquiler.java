@@ -9,8 +9,14 @@ import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,20 +28,53 @@ public class InterfazAlquiler extends javax.swing.JFrame {
     /**
      * Creates new form InterfazAlquiler
      */
+    
+    private SistemaConcecionario sistemaConcecionario;
+    
+    public InterfazAlquiler(SistemaConcecionario sistemaConcecionario) {
+        initComponents();
+        setLocationRelativeTo(null);
+        this.sistemaConcecionario = sistemaConcecionario; // Asigna la instancia pasada
+        
+        Point location = getLocation(); 
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                setLocation(location); 
+            }
+        });
+        
+        // Opcional: Cargar los vehículos en el JComboBox al iniciar la interfaz
+        cargarVehiculosEnComboBox(); 
+    }
+    
+    
     public InterfazAlquiler() {
         initComponents();
         setLocationRelativeTo(null);
+        // NOTA: Si usas este constructor, 'sistemaConcecionario' será null o no tendrá datos cargados
+        // Es mejor SIEMPRE pasar la instancia cargada.
+        // Si no hay otra opción, aquí podrías hacer:
+        // this.sistemaConcecionario = new SistemaConcecionario(); // Esto cargaría los datos, pero si ya hay una instancia global, duplicaría
         
         Point location = getLocation(); 
-
-             addComponentListener(new ComponentAdapter() {
-        @Override
-         public void componentMoved(ComponentEvent e) {
-            setLocation(location); 
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                setLocation(location); 
+            }
+        });
     }
-});
+    
+    private void cargarVehiculosEnComboBox() {
+        jCVehiculo.removeAllItems(); // Limpiar ítems existentes
+        for (Vehiculo v : sistemaConcecionario.concesionaria.getVevhiculos()) {
+            if (v.isDisponible()) { // Solo añadir vehículos disponibles
+                jCVehiculo.addItem(v.toString());
+            }
+        }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,6 +91,10 @@ public class InterfazAlquiler extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jBCargarVehiculos = new javax.swing.JButton();
         jCVehiculo = new javax.swing.JComboBox<>();
+        jBAlquillar = new javax.swing.JButton();
+        jTDias = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTAResumen = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -66,7 +109,8 @@ public class InterfazAlquiler extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Dias Alquilados:");
+        jLabel3.setToolTipText("");
 
         jBCargarVehiculos.setText("Vehiculos");
         jBCargarVehiculos.addActionListener(new java.awt.event.ActionListener() {
@@ -77,35 +121,59 @@ public class InterfazAlquiler extends javax.swing.JFrame {
 
         jCVehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jBAlquillar.setText("Alquilar");
+        jBAlquillar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAlquillarActionPerformed(evt);
+            }
+        });
+
+        jTAResumen.setColumns(20);
+        jTAResumen.setRows(5);
+        jScrollPane1.setViewportView(jTAResumen);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(1, 1, 1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(1, 1, 1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jBAlquillar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jCVehiculo, javax.swing.GroupLayout.Alignment.TRAILING, 0, 150, Short.MAX_VALUE)
-                                    .addComponent(jTClienteBuscado, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                    .addComponent(jTDias)
+                                    .addComponent(jTClienteBuscado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jCVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jBBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jBCargarVehiculos, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                            .addComponent(jBCargarVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(28, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTClienteBuscado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -114,9 +182,15 @@ public class InterfazAlquiler extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBCargarVehiculos)
                     .addComponent(jCVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51)
-                .addComponent(jLabel3)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jBAlquillar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,7 +236,7 @@ public class InterfazAlquiler extends javax.swing.JFrame {
                 int marcaFin = linea.indexOf(" precio");
                 String marca = linea.substring(marcaInicio, marcaFin).trim();
 
-                jCVehiculo.addItem(marca + " " + modelo);
+                jCVehiculo.addItem("modelo:" + modelo + " marca:" + marca);
             }
         }
 
@@ -174,6 +248,91 @@ public class InterfazAlquiler extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Error al leer el archivo: " + e.getMessage());
     }
     }//GEN-LAST:event_jBCargarVehiculosActionPerformed
+
+    private void jBAlquillarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlquillarActionPerformed
+        String clienteCI = jTClienteBuscado.getText().trim();
+        Object selected = jCVehiculo.getSelectedItem();
+
+        if (clienteCI.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese la cédula del cliente.");
+            return;
+        }
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un vehículo.");
+            return;
+        }
+        String vehiculoSeleccionadoTexto = selected.toString(); // Esto es la representación completa del vehículo del JComboBox
+
+        String nombreCliente = "";
+        boolean clienteEncontrado = false;
+        Cliente clienteEncontradoObj = null; // Para guardar el objeto Cliente
+
+        // 1. Buscar cliente en el ArrayList de SistemaConcecionario
+        for (Cliente cliente : sistemaConcecionario.concesionaria.getClientes()) {
+            if (cliente.getCedula().equals(clienteCI)) {
+                clienteEncontrado = true;
+                nombreCliente = cliente.getNombre();
+                clienteEncontradoObj = cliente;
+                break;
+            }
+        }
+
+        if (!clienteEncontrado) {
+            JOptionPane.showMessageDialog(this, "Cliente no encontrado.");
+            return;
+        }
+
+        // 2. Extraer la placa del vehículo seleccionado del JComboBox
+        // El formato es "[placa:PLACA modelo:MODELO marca:MARCA ...]"
+        String placaVehiculoSeleccionado = null;
+        Pattern patternVehiculo = Pattern.compile("\\[placa:(.*?) modelo:.*");
+        Matcher matcherVehiculo = patternVehiculo.matcher(vehiculoSeleccionadoTexto);
+        if (matcherVehiculo.matches()) {
+            placaVehiculoSeleccionado = matcherVehiculo.group(1).trim();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al obtener la placa del vehículo seleccionado.");
+            return;
+        }
+
+        Vehiculo vehiculoParaAlquilar = null;
+        boolean vehiculoDisponible = false;
+
+        // 3. Buscar el vehículo en el ArrayList y actualizar su disponibilidad
+        for (Vehiculo vehiculo : sistemaConcecionario.concesionaria.getVevhiculos()) {
+            if (vehiculo.getPlaca().equals(placaVehiculoSeleccionado)) {
+                vehiculoParaAlquilar = vehiculo;
+                if (vehiculo.isDisponible()) {
+                    vehiculoDisponible = true;
+                    vehiculo.setDisponible(false); // Cambiar disponibilidad a false
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(this, "El vehículo seleccionado no está disponible.");
+                    return;
+                }
+            }
+        }
+
+        if (vehiculoParaAlquilar == null) {
+            JOptionPane.showMessageDialog(this, "Vehículo no encontrado en el sistema.");
+            return;
+        }
+        
+        if (!vehiculoDisponible) {
+            // Este caso ya fue manejado dentro del bucle, pero se deja para claridad
+            return; 
+        }
+
+        // 4. Guardar los cambios en el archivo de vehículos
+        sistemaConcecionario.guardarVehiculos("vehiculos.txt"); // Guarda la lista actualizada de vehículos
+
+        // 5. Mostrar resumen en JTextArea y JOptionPane
+        String resumen = "Cliente: " + nombreCliente + " (C.I.: " + clienteCI + ")\n"
+                       + "Vehículo alquilado: " + vehiculoParaAlquilar.getMarca() + " " + vehiculoParaAlquilar.getModelo() + " (Placa: " + vehiculoParaAlquilar.getPlaca() + ")\n"
+                       + "Estado del vehículo: No Disponible";
+        jTAResumen.setText(resumen);
+        JOptionPane.showMessageDialog(null, "Resumen del Alquiler:\n" + resumen, "Alquiler Confirmado", JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_jBAlquillarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,12 +370,16 @@ public class InterfazAlquiler extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAlquillar;
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBCargarVehiculos;
     private javax.swing.JComboBox<String> jCVehiculo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTAResumen;
     private javax.swing.JTextField jTClienteBuscado;
+    private javax.swing.JTextField jTDias;
     // End of variables declaration//GEN-END:variables
 }

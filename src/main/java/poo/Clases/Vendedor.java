@@ -14,13 +14,22 @@ public class Vendedor extends Persona{
     private String puesto;
     
     //Constructores
-
+    /**
+     * Constructor por defecto de la clase Vendedor
+     */
     public Vendedor() {
         super();
         this.puesto = "";
         id++;
     }
-
+    /**
+     * Constructor con parametros de la clase Vendedor
+     * @param nombre
+     * @param cedula
+     * @param telefono
+     * @param edad
+     * @param puesto 
+     */
     public Vendedor(String nombre, String cedula, String telefono, int edad, String puesto) {
         super(nombre, cedula, telefono, edad);
         this.puesto = puesto;

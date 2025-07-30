@@ -17,6 +17,9 @@ public class Consesionaria {
     private ArrayList<Vehiculo> vevhiculos = new ArrayList<>();
     
     //Constructores
+    /**
+     *Constructor por defecto de la clase Consesionaria.
+     */
     public Consesionaria() {
     } 
     /**

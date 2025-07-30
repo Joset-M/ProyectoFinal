@@ -18,7 +18,9 @@ public class Vehiculo implements Alquiler{
     private boolean disponible;
     
     //Constructor
-
+    /*
+    Constructor con parametros de la clase vehiculo.
+    */
     public Vehiculo() {
         this.placa = "";
         this.modelo = "";
@@ -63,7 +65,11 @@ public class Vehiculo implements Alquiler{
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-
+    //Metodos
+    /**
+     * Metodo que nos permite mostrar la informacion de los vehiculos agregados.
+     * @return 
+     */
     @Override
     public String toString() {
         return "[placa:" + placa + " modelo:" + modelo + " marca:" + marca + " precio del Alquiler:" + precioAlquiler + " Disponible:" + disponible+']';

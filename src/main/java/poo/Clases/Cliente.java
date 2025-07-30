@@ -14,13 +14,23 @@ public class Cliente extends Persona {
     private String direccion;
     
     //Constructores
-
+    /**
+     * Constructor por defecto de la clase Cliente.
+     */
     public Cliente() {
         super();
         this.correo = "";
         this.direccion = "";
     }
-
+    /**
+     * Constructor con parametros de la clase Cliente.
+     * @param correo
+     * @param direccion
+     * @param nombre
+     * @param cedula
+     * @param telefono
+     * @param edad 
+     */
     public Cliente(String correo, String direccion, String nombre, String cedula, String telefono, int edad) {
         super(nombre, cedula, telefono, edad);
         this.correo = correo;
@@ -48,6 +58,10 @@ public class Cliente extends Persona {
     }
     
     //Metodo
+    /**
+     * Metodo que nos permite mostrar la informacion del Cliente.
+     * @return 
+     */
     @Override
     public String toString() {
         return "[Nombre: " + getNombre() + " Cédula: " + getCedula() + " Teléfono: " + getTelefono()
