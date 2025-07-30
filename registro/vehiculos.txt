@@ -1,0 +1,4 @@
+[placa:AAAC-0123 modelo:Prius liftback marca:Toyota precio del Alquiler:80.0 Disponible:true]
+[placa:ABC-1234 modelo:Sedán 2026 marca:KIA precio del Alquiler:45.0 Disponible:true]
+[placa:AMB-0000 modelo:GTR marca:Nissan precio del Alquiler:120.0 Disponible:true]
+[placa:AFC-1234 modelo:Suv marca:KIA precio del Alquiler:50.0 Disponible:true]

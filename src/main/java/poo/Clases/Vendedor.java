@@ -11,16 +11,19 @@ package poo.Clases;
 public class Vendedor extends Persona{
     //Atributos
     private static int id;
+    private String puesto;
     
     //Constructores
 
     public Vendedor() {
         super();
+        this.puesto = "";
         id++;
     }
 
-    public Vendedor(String nombre, String cedula, String telefono, int edad) {
+    public Vendedor(String nombre, String cedula, String telefono, int edad, String puesto) {
         super(nombre, cedula, telefono, edad);
+        this.puesto = puesto;
         id++;
     }
     
@@ -28,7 +31,16 @@ public class Vendedor extends Persona{
     public static int getId() {
         return id;
     }
+
+    public String getPuesto() {
+        return puesto;
+    }
     
+    //Setters
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
+    }
+
     //Metodo
     /**
      * Metodo que nos permite mostrar la informacion del vendedor
@@ -36,7 +48,8 @@ public class Vendedor extends Persona{
      */
     @Override
     public String toString() {
-        return "Vendedor{" + '}';
+        return "[ID: " + id + " Nombre:" + getNombre() + " Cédula: " + getCedula() + " Puesto:" + getPuesto()+" Teléfono: " + getTelefono()
+                +" Edad: " + getEdad() + "]";
     }
     
 }

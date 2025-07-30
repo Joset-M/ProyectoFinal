@@ -48,11 +48,10 @@ public class Cliente extends Persona {
     }
     
     //Metodo
-    
-    
     @Override
     public String toString() {
-        return "Cliente{" + "correo=" + correo + ", direccion=" + direccion + '}';
+        return "[Nombre: " + getNombre() + " Cédula: " + getCedula() + " Teléfono: " + getTelefono()
+               +" Edad: " + getEdad() + " Dirección: " + getDireccion() + " Correo: " + getCorreo()+ " ]";
     }
     
 }

@@ -1,0 +1,5 @@
+[Nombre: Joset Muela Cédula: 1728650852 Teléfono: 0995189671 Edad: 18 Dirección: Calacali Correo: josetmuela@gmail.com ]
+[Nombre: Kevin Vaca Cédula: 1728650852 Teléfono: 09900898162 Edad: 18 Dirección: Shusufindi Correo: kevin.vaca03@epn.edu.ec ]
+[Nombre: Katty Llumitasig Cédula: 1728650852 Teléfono: 0984877510 Edad: 18 Dirección: El Inca Correo: ketrinjami@gmail.com ]
+[Nombre: Irina Sotalin Cédula: 1723879183 Teléfono: 0960021012 Edad: 18 Dirección: Nayón Correo: nayelysotalin@gmail.com ]
+[Nombre: Jose Vizcaino Cédula: 1756110860 Teléfono: 0963387166 Edad: 19 Dirección: Pio 12 Correo: jose.miguel@epn.edu.ec ]

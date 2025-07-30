@@ -1,0 +1,2 @@
+[ID: 1 Nombre:Andres Loor Cédula: 1727448787 Puesto:Recepcionista Teléfono: 0992597895 Edad: 19]
+[ID: 2 Nombre:Damian Muela Cédula: 1728650852 Puesto:Vendedor Teléfono: 0995189671 Edad: 18]
